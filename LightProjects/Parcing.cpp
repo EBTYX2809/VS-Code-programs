@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <cmath>
 using namespace std;
 
 class Parser
@@ -22,6 +23,17 @@ private:
         }
     }
 
+    int ParserPower(int num)
+    {
+        while (stringNotEnd(), expression[it] == '^') // Считывание степеня
+        {
+            it++;                   // После обнаружения степени идем дальше по цифрам.
+            int a = ParserNumber(); // Достает сам степень
+            num = pow(num, a);      // Уже готове число из прошлых вычислений возводим в нужный степень
+        }
+        return num;
+    }
+
     int ParserNumber() // Изначальаня функция считывания номера из строки
     {
         int num = 0;
@@ -30,6 +42,7 @@ private:
             num = num * 10 + (expression[it] - '0'); // Тут работает на ASCII и добалвяет новые десятки через банальное умножение на 10
             it++;
         }
+        ParserPower(num); // Проверяем и делаем возведение в степень если нужно
         return num;
     }
 
@@ -44,7 +57,8 @@ private:
         {
             it++; // Скипаем (
             int result = ParserCounting();
-            it++; // Скипаем )
+            it++;                // Скипаем )
+            ParserPower(result); // Проверяем и делаем возведение в степень если нужно
             return result;
         }
         else
