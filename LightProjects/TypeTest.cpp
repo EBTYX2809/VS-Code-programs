@@ -19,16 +19,16 @@ void Test()
                          "tea", "coffee", "juice", "cake", "pie", "cookie", "jam", "honey", "meat", "rice",
                          "pasta", "soup", "salad", "apple", "banana", "grape", "peach", "plum", "pear", "berry"};
 
-    string TestKit[10];
-    int index = 0;
-    for (int i = 0; i < 10;)
+    string TestKit[10];      // Набор отбираемых для теста слов
+    int index = 0;           // Номер проверяемого слова
+    for (int i = 0; i < 10;) // Проверка уникальности слова
     {
         bool unique;
         unique = true;
         index = rand() % 100;
         for (int j = 0; j < i; j++)
         {
-            if (TestKit[j] == WordsKit[index])
+            if (TestKit[j] == WordsKit[index]) // Находит уже выбраное слово и сравнивает со словом по актуальному индексу
             {
                 unique = false;
                 break;
@@ -36,12 +36,12 @@ void Test()
         }
         if (unique)
         {
-            TestKit[i] = WordsKit[index];
+            TestKit[i] = WordsKit[index]; // Если функция не сдохла на проверке уникальности просто добавляем слово в набор для теста
             i++;
         }
     }
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++) // Визуальное оформеление
     {
         if (i == 9)
         {
@@ -58,8 +58,8 @@ void Test()
     if (a == 1)
     {
         string temp;
-        auto start = chrono::high_resolution_clock::now();
-        for (int i = 0; i < 10; i++)
+        auto start = chrono::high_resolution_clock::now(); // Начало таймера
+        for (int i = 0; i < 10; i++)                       // Ну и довольно очевидная проверка правильности слова
         {
             cout << "Current word: " << TestKit[i] << endl
                  << endl;
@@ -70,8 +70,8 @@ void Test()
                 score++;
             }
         }
-        auto end = chrono::high_resolution_clock::now();
-        chrono::duration<double> duration = end - start;
+        auto end = chrono::high_resolution_clock::now(); // Конец таймера
+        chrono::duration<double> duration = end - start; // Подсчет времени
         cout << "Time taken to execute Test: " << duration.count() << " seconds." << endl;
     }
     cout << "Your score " << score << "/10.\n";

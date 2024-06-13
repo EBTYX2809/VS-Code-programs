@@ -40,10 +40,10 @@ public:
             {
                 break;
             }
-            it = goods.find(name);
+            it = goods.find(name); // Ищет название товара
             if (it != goods.end())
             {
-                sum += it->second;
+                sum += it->second; // Добавляет его стоимость к сумме
                 cout << "Added " << name << " costing " << it->second << "$. Total sum: " << sum << "$\n";
             }
             else
