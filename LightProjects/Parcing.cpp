@@ -23,48 +23,43 @@ private:
         }
     }
 
-    int ParserPower(int num)
+    int ParserPower(int base)
     {
-        while (stringNotEnd(), expression[it] == '^') // Считывание степеня
+        while (stringNotEnd() && expression[it] == '^') // Считывание степеня
         {
             it++;                   // После обнаружения степени идем дальше по цифрам.
-            int a = ParserNumber(); // Достает сам степень
-            num = pow(num, a);      // Уже готове число из прошлых вычислений возводим в нужный степень
+            int a = ParserSymbol(); // Достает сам степень
+            base = pow(base, a);    // Уже готове число из прошлых вычислений возводим в нужный степень
         }
-        return num;
+        return base;
     }
 
     int ParserNumber() // Изначальаня функция считывания номера из строки
     {
         int num = 0;
-        while (isdigit(expression[it])) // Работает пока isdigit видит в строке цифру
+        while (stringNotEnd() && isdigit(expression[it])) // Работает пока isdigit видит в строке цифру
         {
             num = num * 10 + (expression[it] - '0'); // Тут работает на ASCII и добалвяет новые десятки через банальное умножение на 10
             it++;
         }
-        ParserPower(num); // Проверяем и делаем возведение в степень если нужно
         return num;
     }
 
     int ParserSymbol() // Подсчет () и изъятие чисел
     {
         skipSpace();
+        int result = 0;
         if (stringNotEnd() && isdigit(expression[it]))
         {
-            return ParserNumber(); // Тут просто считывает число
+            result = ParserNumber(); // Тут просто считывает число
         }
         else if (stringNotEnd() && expression[it] == '(') // А тут очевидно скобки
         {
             it++; // Скипаем (
-            int result = ParserCounting();
-            it++;                // Скипаем )
-            ParserPower(result); // Проверяем и делаем возведение в степень если нужно
-            return result;
+            result = ParserCounting();
+            it++; // Скипаем )
         }
-        else
-        {
-            return 0;
-        }
+        return ParserPower(result); // Проверяем и делаем возведение в степень если нужно
     }
 
     int ParserMultiplication() // Подсчет * и /
