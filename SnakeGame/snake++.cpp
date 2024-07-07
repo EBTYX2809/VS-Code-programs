@@ -61,7 +61,7 @@ public:
                 }
                 if (snakeLength > 0) // Отрисовка хвоста
                 {
-                    for (int k = 0; k < snakeLength; k++)
+                    for (int k = 1; k < snakeLength; k++)
                     {
                         if (tailX[k] == x && tailY[k] == y)
                         {
@@ -198,8 +198,8 @@ public:
         {
             SetArea();
             Input();
-            Logic();
             Rule();
+            Logic();
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     }
